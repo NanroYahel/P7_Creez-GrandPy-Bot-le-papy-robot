@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 from datetime import datetime
 
@@ -12,10 +12,11 @@ app.config.from_object('config')
 def inject_now():
     return dict(now=datetime.now())
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 def index():
-	return render_template('index.html')
+	if request.method == "POST":
+		usr_question = request.form['question']
+		# return render_template('test.html', question=usr_question)
 
-def hello(name):
-    return 'Hello ' + name
+	return render_template('index.html')

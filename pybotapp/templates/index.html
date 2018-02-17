@@ -1,1 +1,17 @@
 {% extends '/layouts/default.html' %}
+
+{% block body %}
+
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10" id="chat">
+			</div>
+		</div>
+		<div class="row">
+			<form method="post" action="">
+				<input type="text" name="question" class="col-md-offset-1 col-md-9" id="question-zone">
+				<input type="submit" name="col-md-1" value="Demander" id="button">
+			</form>
+		</div>
+		<script type="text/javascript" src="static/js/chat.js"></script>
+		
+{% endblock body %}
