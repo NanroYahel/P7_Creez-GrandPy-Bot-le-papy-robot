@@ -2,6 +2,8 @@ from flask import Flask, render_template, request
 
 from datetime import datetime
 
+from .pybot_app import make_text
+
 app = Flask(__name__)
 
 #Config option
@@ -17,6 +19,12 @@ def inject_now():
 def index():
 	if request.method == "POST":
 		usr_question = request.form['question']
-		# return render_template('test.html', question=usr_question)
+		text = make_text(usr_question)
+		return render_template('test.html', question=text)
 
 	return render_template('index.html')
+
+
+
+
+
