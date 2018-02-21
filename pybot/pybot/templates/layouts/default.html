@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>PyBot - Le papy Robot</title>
+		<link rel="stylesheet" type="text/css" href="static/css/bootstrap/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="static/css/style.css">
+	</head>
+	<body>
+		<header>		
+			<h1> Bienvenue chez GrandPy</h1>
+			<p>J'ai la réponse à toutes vos questions ! </p>
+		</header>
+
+		{% block body %}{% endblock %}
+		
+		<footer>
+			<p>&copy; Copyright {{now.year}} &middot; LE HAY Ronan. All rights reserved</p>
+		</footer>
+	</body>
+
+</html>
