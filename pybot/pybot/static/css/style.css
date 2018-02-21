@@ -28,3 +28,8 @@ footer{
 .usr{
 	font-weight: bold;
 }
+
+#map{
+	margin-top: 30px;
+	min-height: 200px;
+}

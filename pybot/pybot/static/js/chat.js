@@ -24,7 +24,7 @@ function createChatElement(user, question){
 
 //Add the content off the "input" in the "chat"
 document.getElementById("button").addEventListener("click", function(e){
-	e.preventDefault();
+	// e.preventDefault();
 	usrQuestion = createChatElement("Utilisateur : ", );
 	question = usrQuestion.getElementsByClassName("chat").value; //store the user question 
 	botAnswer = createChatElement("GrandPyBot : ", question);

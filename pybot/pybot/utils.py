@@ -3,8 +3,12 @@ import json
 
 import requests as req
 
-from .. import config as conf
+import config as conf
 
+#Fonction de test à supprimer
+def make_text(question):
+    """Fonction pour test"""
+    return 'Vous avez saisi : ' + question
 
 def parser(question):
     """Function used to parse the question of the user
@@ -24,4 +28,7 @@ def get_data_from_google_maps(keywords):
     url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query={}&key={}".format(\
         keywords, conf.GOOGLE_MAPS_KEY)
     data = req.get(url)
-    return data.json()
+    data = data.json()
+    result_lat = data["results"][0]["geometry"]["location"]["lat"]
+    result_long = data["results"][0]["geometry"]["location"]["lng"]
+    return result_lat, result_long
