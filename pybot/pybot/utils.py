@@ -32,3 +32,6 @@ def get_data_from_google_maps(keywords):
     result_lat = data["results"][0]["geometry"]["location"]["lat"]
     result_long = data["results"][0]["geometry"]["location"]["lng"]
     return result_lat, result_long
+
+def get_data_from_media_wiki(keywords):
+    pass

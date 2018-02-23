@@ -4,7 +4,7 @@ import unittest
 import pybot
 from pybot import utils
 from unittest.mock import MagicMock
-# from io import BytesIO
+from io import BytesIO
 import json
 
 class TestFlaskApp(unittest.TestCase):
@@ -34,14 +34,22 @@ class TestUtils(unittest.TestCase):
 
     def test_get_data_from_google_maps(self):
         """Test the Google map api request function"""
-        mock_result = {"results": [{"geometry": {"location": \
-            {"lat": 47.23184999999999, "lng": -1.5584598}},}],}
-        result = json.JSONEncoder().encode(mock_result)
-        utils.req.get = MagicMock(return_value=result)
+        mock_result = {"results": [{"geometry": {"location": {"lat": 47.23184999999999, "lng": -1.5584598}}}]}
+        # result = json.dumps(mock_result)
+        # result_2 = json.loads(result)
+        # print(type(mock_result))
+        # print(mock_result)
+        # print(type(result))
+        # print(result)
+        # print(type(result_2))
+        # print(result_2)
+        # mock_result = utils.req.Response()
+        mock_result = utils.req.Response()
+        # mock_result.text = {"results": [{"geometry": {"location": {"lat": 47.23184999999999, "lng": -1.5584598}}}]}
+        utils.req.get = MagicMock(return_value=mock_result)
         test_lat, test_long = utils.get_data_from_google_maps("test")
         assert test_lat == 47.23184999999999
         assert test_long == -1.5584598
-
 
 if __name__ == "__main__":
     unittest.main()
