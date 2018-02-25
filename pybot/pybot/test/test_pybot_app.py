@@ -3,7 +3,8 @@
 import unittest
 import pybot
 from pybot import utils
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
+
 from io import BytesIO
 import json
 
@@ -30,26 +31,17 @@ class TestUtils(unittest.TestCase):
     def test_parser(self):
         """Test the parser function"""
         test_result = utils.parser("Je suis allé au marché")
-        assert test_result == "Je allé marché"
+        self.assertEqual(test_result,"Je allé marché")
 
-    def test_get_data_from_google_maps(self):
+    @patch('pybot.utils.request_api')
+    def test_get_data_from_google_maps(self, mock_request_api):
         """Test the Google map api request function"""
-        mock_result = {"results": [{"geometry": {"location": {"lat": 47.23184999999999, "lng": -1.5584598}}}]}
-        # result = json.dumps(mock_result)
-        # result_2 = json.loads(result)
-        # print(type(mock_result))
-        # print(mock_result)
-        # print(type(result))
-        # print(result)
-        # print(type(result_2))
-        # print(result_2)
-        # mock_result = utils.req.Response()
-        mock_result = utils.req.Response()
-        # mock_result.text = {"results": [{"geometry": {"location": {"lat": 47.23184999999999, "lng": -1.5584598}}}]}
-        utils.req.get = MagicMock(return_value=mock_result)
+        mock_result = {"results": [{"geometry": {"location": \
+            {"lat": 47.231849, "lng": -1.5584598}}}]}
+        mock_request_api.return_value = mock_result
         test_lat, test_long = utils.get_data_from_google_maps("test")
-        assert test_lat == 47.23184999999999
-        assert test_long == -1.5584598
+        self.assertEqual(test_lat, 47.231849)
+        self.assertEqual(test_long, -1.5584598)
 
 if __name__ == "__main__":
     unittest.main()

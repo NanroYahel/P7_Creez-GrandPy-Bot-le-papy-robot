@@ -23,12 +23,16 @@ def parser(question):
     key_words = " "
     return key_words.join(list_word)
 
+def request_api(url):
+    """Request the selected url and return data from the api as json"""
+    data = req.get(url)
+    return data.json()
+
 def get_data_from_google_maps(keywords):
     """Do request to the google maps API"""
     url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query={}&key={}".format(\
         keywords, conf.GOOGLE_MAPS_KEY)
-    data = req.get(url)
-    data = data.json()
+    data = request_api(url)
     result_lat = data["results"][0]["geometry"]["location"]["lat"]
     result_long = data["results"][0]["geometry"]["location"]["lng"]
     return result_lat, result_long
