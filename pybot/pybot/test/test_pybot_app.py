@@ -3,7 +3,7 @@
 import unittest
 import pybot
 from pybot import utils
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 from io import BytesIO
 import json
@@ -43,5 +43,27 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(test_lat, 47.231849)
         self.assertEqual(test_long, -1.5584598)
 
+    @patch('pybot.utils.request_api')
+    def test_get_title_from_wiki(self, mock_request_api):
+        """Test function to see if it select the correct title for 'Paris' keywords"""
+        mock_result = ["paris",["Paris",],["Paris (prononc\u00e9 [pa.\u0281i] ) est la capitale de la France. Elle se situe au c\u0153ur d\'un vaste bassin s\u00e9dimentaire aux sols fertiles et au climat temp\u00e9r\u00e9, le bassin parisien, sur une boucle de la Seine, entre les confluents de celle-ci avec la Marne et l\'Oise.",],["https://fr.wikipedia.org/wiki/Paris",]]
+        mock_request_api.return_value = mock_result
+        test_result = utils.get_title_from_wiki('test')
+        self.assertEqual(test_result, 'Paris')
+
+    @patch('pybot.utils.get_title_from_wiki')
+    @patch('pybot.utils.request_api')
+    def test_get_data_from_wiki(self, mock_request_api, mock_get_title_from_wiki):
+        """Test function to see if it select the correct information from an article datas"""
+        mock_request_result = {"batchcomplete":"","warnings":{"extracts":{"*":"\"exlimit\" was too large for a whole article extracts request, lowered to 1."}},"query":{"normalized":[{"from":"paris","to":"Paris"}],"pages":{"681159":{"pageid":681159,"ns":0,"title":"Paris","extract":"Paris (prononc\u00e9 [pa.\u0281i] ) est la capitale de la France."}}}}
+        mock_get_title_from_wiki.return_value = 'Paris'
+        mock_request_api.return_value = mock_request_result
+        test_result = utils.get_data_from_wiki("test")
+        self.assertEqual(test_result, 'Paris (prononcé [pa.ʁi] ) est la capitale de la France.')
+
+
 if __name__ == "__main__":
     unittest.main()
+
+
+

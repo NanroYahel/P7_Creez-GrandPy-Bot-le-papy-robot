@@ -37,5 +37,33 @@ def get_data_from_google_maps(keywords):
     result_long = data["results"][0]["geometry"]["location"]["lng"]
     return result_lat, result_long
 
-def get_data_from_media_wiki(keywords):
-    pass
+def get_title_from_wiki(keywords):
+    """Request media wiki to get the title of the first article link to the keywords"""
+    #Return all the articles link to the keywords
+    url = 'https://fr.wikipedia.org/w/api.php?action=opensearch&search={}'.format(keywords)  
+    data = request_api(url)
+    #Try to get and return the firt article
+    try:
+        article_title = data[1][0]
+    #Return an error message if there is no result
+    except IndexError:
+        msg_error = "Je suis désolé, je ne connais rien à ce sujet..."
+        return msg_error
+    return article_title
+
+
+def get_data_from_wiki(keywords):
+    """Request wikimedia to get the firt sentences of a wikipedia article"""
+    article_title = get_title_from_wiki(keywords)
+    #Return the first sentence of a wikipedia article
+    url = 'https://fr.wikipedia.org/w/api.php?action=query&titles={}&prop=extracts&exsentences=1 \
+        &format=json&explaintext'.format(article_title)
+    data = request_api(url)
+    #Loop on only one element (page_id), but usefull because we don't know the id of the page
+    try:
+        for page_id in data['query']['pages']:
+            result = data['query']['pages'][page_id]['extract']
+    except KeyError:
+        msg_error = "Je suis désolé, je ne connais rien à ce sujet..."
+        return msg_error
+    return result

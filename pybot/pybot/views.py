@@ -26,10 +26,11 @@ def index():
 
 	if request.method == "POST":
 		usr_question = request.form['question']
-		search = utils.parser(usr_question)
-		result_lat, result_long = utils.get_data_from_google_maps(search)
+		keywords = utils.parser(usr_question)
+		result_lat, result_long = utils.get_data_from_google_maps(keywords)
+		wiki_result = utils.get_data_from_wiki(keywords)
 		return render_template('test.html', result_lat=result_lat, result_long=result_long, \
-			google_key=conf.GOOGLE_MAPS_KEY)
+			google_key=conf.GOOGLE_MAPS_KEY, wiki_result=wiki_result)
 
 	return render_template('index.html')
 

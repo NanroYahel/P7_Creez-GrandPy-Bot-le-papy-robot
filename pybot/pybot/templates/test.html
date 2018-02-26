@@ -3,15 +3,15 @@
 {% block body %}
 
 <div class="row">
-	<div class="row">
-	<div class="col-md-offset-1 col-md-10" id="chat">
-		<div id="map" class="col-md-offset-1 col-md-10">
+		<div class="col-md-offset-1 col-md-10" id="chat">
+			<div class="row">
+				<div id="map" class="col-md-offset-1 col-md-10">
+				</div>
+			</div>
+			<div class="row">
+				<p id="wiki" class="col-md-offset-1 col-md-10">{{wiki_result}}</p>
+			</div>
 		</div>
-	</div>
-	</div>
-	<div>
-		<p>{{wiki_result}}</p>
-	</div>
 </div>
 <script>
 	function initMap() {
