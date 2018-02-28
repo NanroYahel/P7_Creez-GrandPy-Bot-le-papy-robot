@@ -33,7 +33,7 @@ def index():
 	# 	return render_template('test.html', result_lat=result_lat, result_long=result_long, \
 	# 		google_key=conf.GOOGLE_MAPS_KEY, wiki_result=wiki_result)
 
-	return render_template('index.html')
+	return render_template('index.html', google_key=conf.GOOGLE_MAPS_KEY)
 
 
 @app.route('/wiki_api')
@@ -42,5 +42,8 @@ def wiki_api():
 	result = utils.get_data_from_wiki(keywords)
 	return jsonify(result)
 
-
-
+@app.route('/google_api')
+def google_api():
+	keywords = request.args.get('keywords', 'test')
+	result_lat, result_long = utils.get_data_from_google_maps(keywords)
+	return jsonify(result_lat, result_long)
