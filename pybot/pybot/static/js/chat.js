@@ -51,7 +51,8 @@ $(function(){
 			map.id = "map";
 			map.classList.add("col-md-offset-1");
 			map.classList.add("col-md-10");
-			$('#chat').append(map);
+			// $('#chat').append(map);
+			$('<div class="row"><div id="map" class="col-md-offset-1 col-md-10"></div></br></div>').insertBefore( ".chat:last" );
 			var lat = Number(data[0]);
 			var long = Number(data[1]);
 			initMap(lat, long);
