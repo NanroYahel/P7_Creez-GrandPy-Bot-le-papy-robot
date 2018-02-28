@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 
 from datetime import datetime
 
@@ -24,17 +24,23 @@ def index():
 	# 	text = utils.make_text(usr_question)
 	# 	return render_template('test.html', question=text)
 
-	if request.method == "POST":
-		usr_question = request.form['question']
-		keywords = utils.parser(usr_question)
-		result_lat, result_long = utils.get_data_from_google_maps(keywords)
-		wiki_result = utils.get_data_from_wiki(keywords)
-		return render_template('test.html', result_lat=result_lat, result_long=result_long, \
-			google_key=conf.GOOGLE_MAPS_KEY, wiki_result=wiki_result)
+	#Use an synchronous request to wiki and google api for test
+	# if request.method == "POST":
+	# 	usr_question = request.form['question']
+	# 	keywords = utils.parser(usr_question)
+	# 	result_lat, result_long = utils.get_data_from_google_maps(keywords)
+	# 	wiki_result = utils.get_data_from_wiki(keywords)
+	# 	return render_template('test.html', result_lat=result_lat, result_long=result_long, \
+	# 		google_key=conf.GOOGLE_MAPS_KEY, wiki_result=wiki_result)
 
 	return render_template('index.html')
 
 
+@app.route('/wiki_api')
+def wiki_api():
+	keywords = request.args.get('keywords', 'test')
+	result = utils.get_data_from_wiki(keywords)
+	return jsonify(result)
 
 
 

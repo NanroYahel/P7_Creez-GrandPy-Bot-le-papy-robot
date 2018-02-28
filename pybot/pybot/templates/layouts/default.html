@@ -2,6 +2,8 @@
 <html>
 	<head>
 		<title>PyBot - Le papy Robot</title>
+		
+		<!-- For using bootstrap -->
 		<link rel="stylesheet" type="text/css" href="static/css/bootstrap/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="static/css/style.css">
 	</head>
@@ -11,11 +13,18 @@
 			<p>J'ai la réponse à toutes vos questions ! </p>
 		</header>
 
+		<!-- For unsing jquery -->
+		<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script>
+		<script type="text/javascript">
+  			var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+		</script>
+
 		{% block body %}{% endblock %}
 		
 		<footer>
 			<p>&copy; Copyright {{now.year}} &middot; LE HAY Ronan. All rights reserved</p>
 		</footer>
+
 	</body>
 
 </html>

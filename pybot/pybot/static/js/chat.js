@@ -1,6 +1,6 @@
 
-// Create the "p" element for the question
-function createChatElement(user, question){
+//Function to add elements in the chat
+function addChatElement(user,chat){
 	//Create the elements
 	var returnElt = document.createElement("p")
 	var usrElt = document.createElement("span");
@@ -10,11 +10,7 @@ function createChatElement(user, question){
 	chatElt.classList.add("chat");
 	//Get the value of each element
 	usrElt.textContent = user;
-	if (user == "Utilisateur : "){
-		chatElt.textContent = document.getElementById("question-zone").value;
-	} else{
-		chatElt.textContent = "Vous m'avez demandé : " + document.getElementById("question-zone").value;
-	}
+	chatElt.textContent = chat;
 	// Add the "p" elements to the return Element
 	returnElt.appendChild(usrElt);	
 	returnElt.appendChild(chatElt);
@@ -22,12 +18,16 @@ function createChatElement(user, question){
 }
 
 
-//Add the content off the "input" in the "chat"
-document.getElementById("button").addEventListener("click", function(e){
-	// e.preventDefault();
-	usrQuestion = createChatElement("Utilisateur : ", );
-	question = usrQuestion.getElementsByClassName("chat").value; //store the user question 
-	botAnswer = createChatElement("GrandPyBot : ", question);
-	document.getElementById("chat").appendChild(usrQuestion);
-	document.getElementById("chat").appendChild(botAnswer);
-})
+//Add asynchronous request to wiki api
+$(function(){
+	var submit_form = function(e){
+		$.getJSON($SCRIPT_ROOT + '/wiki_api', {keywords: $('input[name="question"]').val()}, function(data){
+			$('#chat').append(addChatElement('Utilisateur : ', $('input[name="question"]').val()));
+			$('#chat').append(addChatElement('GrandPyBot : ', data));
+			// $('span.bot_chat').text(data);
+		});
+	return false;
+	};
+	$('#button').on('click', submit_form);
+});
+
