@@ -8,23 +8,24 @@
 		<link rel="stylesheet" type="text/css" href="static/css/style.css">
 	</head>
 	<body>
-		<header>		
-			<h1> Bienvenue chez GrandPy</h1>
-			<p>J'ai la réponse à toutes vos questions ! </p>
-		</header>
+		<div class="container">
+			<header>		
+				<h1> Bienvenue chez GrandPy</h1>
+				<p>J'ai la réponse à toutes vos questions ! </p>
+			</header>
 
-		<!-- For unsing jquery -->
-		<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script>
-		<script type="text/javascript">
-  			var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-		</script>
+			<!-- For unsing jquery -->
+			<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script>
+			<script type="text/javascript">
+	  			var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+			</script>
 
-		{% block body %}{% endblock %}
-		
-		<footer>
-			<p>&copy; Copyright {{now.year}} &middot; LE HAY Ronan. All rights reserved</p>
-		</footer>
-
+			{% block body %}{% endblock %}
+			
+			<footer>
+				<p>&copy; Copyright {{now.year}} &middot; LE HAY Ronan. All rights reserved</p>
+			</footer>
+		</div>
 	</body>
 
 </html>

@@ -29,8 +29,8 @@ footer{
 	font-weight: bold;
 }
 
-#map, #wiki{
-	margin-top: 30px;
-	min-height: 200px;
+#map{
+	margin-left: 20px; 
+	min-height: 400px;
 }
 

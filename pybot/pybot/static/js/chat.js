@@ -1,3 +1,12 @@
+//List of sentences for the answer of pybot
+var randomSentences = ['Intéressant ! Je suis sûr que tu ne sais même pas que : ', 'Très bon choix ! D\'ailleurs, savais-tu que : ', 'J\'adore cet endroit. Je ne sais pas si tu sais mais : ' ]
+
+//Get random setence from the list above
+function getRandomSentence(){
+	var randomNumber = Math.floor(Math.random() * (3 - 1)) + 0;
+	var sentence = randomSentences[randomNumber];
+	return sentence;
+}
 
 //Function to add elements in the chat
 function addChatElement(user,chat){
@@ -36,7 +45,7 @@ $(function(){
 	var submit_form = function(e){
 		$.getJSON($SCRIPT_ROOT + '/wiki_api', {keywords: $('input[name="question"]').val()}, function(data){
 			$('#chat').append(addChatElement('Utilisateur : ', $('input[name="question"]').val()));
-			$('#chat').append(addChatElement('GrandPyBot : ', data));
+			$('#chat').append(addChatElement('GrandPyBot : ', getRandomSentence() + '"' + data + '"'));
 		});
 	return false;
 	};
@@ -44,20 +53,20 @@ $(function(){
 });
 
 //Add asynchronous request to google api
-$(function(){
-	var submit_form = function(e){
-		$.getJSON($SCRIPT_ROOT + '/google_api', {keywords: $('input[name="question"]').val()}, function(data){
-			var map = document.createElement("div");
-			map.id = "map";
-			map.classList.add("col-md-offset-1");
-			map.classList.add("col-md-10");
-			// $('#chat').append(map);
-			$('<div class="row"><div id="map" class="col-md-offset-1 col-md-10"></div></br></div>').insertBefore( ".chat:last" );
-			var lat = Number(data[0]);
-			var long = Number(data[1]);
-			initMap(lat, long);
-		});
-	return false;
-	};
-	$('#button').on('click', submit_form);
-});
+// $(function(){
+// 	var submit_form = function(e){
+// 		$.getJSON($SCRIPT_ROOT + '/google_api', {keywords: $('input[name="question"]').val()}, function(data){
+// 			var lat = Number(data[0]);
+// 			var long = Number(data[1]);
+// 			initMap(lat, long);
+// 		});
+// 	return false;
+// 	};
+// 	$('#button').on('click', submit_form);
+// });
+
+
+//Initialize chat with a welcome message
+var welcomeMessage = "Bonjour jeune curieux ! Où souhaites-tu te rendre ? ";
+$('#chat').append(addChatElement('GrandPyBot : ', welcomeMessage));
+
