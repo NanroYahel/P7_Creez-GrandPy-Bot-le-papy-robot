@@ -16,6 +16,8 @@ def parser(question):
     only key words"""
     #Variable use to remove all punctuation symbols
     punctuation = ['.',',','!',':','\'',':','&',';','-','?']
+    #Variable that contains the final keywords
+    list_keywords = []
     for char in question:
         if char in punctuation:
             question = question.replace(char,' ')
@@ -23,10 +25,10 @@ def parser(question):
     with open('pybot/stopwords.json', 'r') as file:
         stopwords = json.load(file)
         for word in list_word:
-            if word.lower() in stopwords:
-                list_word.remove(word)
+            if word.lower() not in stopwords:
+                list_keywords.append(word)
     key_words = " "
-    return key_words.join(list_word)
+    return key_words.join(list_keywords)
 
 def request_api(url):
     """Request the selected url and return data from the api as json"""
