@@ -39,12 +39,15 @@ function initMap(lat, long) {
     });
   }
 
+//Display the question of the user
+$('#button').on('click', function(){
+	$('#chat').append(addChatElement('Utilisateur : ', $('input[name="question"]').val()));
+});
 
 //Add asynchronous request to google api
 $(function(){
 	var submit_form = function(e){
 		$.getJSON($SCRIPT_ROOT + '/google_api', {keywords: $('input[name="question"]').val()}, function(data){
-			$('#chat').append(addChatElement('Utilisateur : ', $('input[name="question"]').val()));
 			if (data === 'NORETURN'){
 				$('#chat').append(addChatElement('GrandPyBot : ', "Je ne comprends pas ce que tu cherches..."))
 			} else{
@@ -66,7 +69,6 @@ $(function(){
 $(function(){
 	var submit_form = function(e){
 		$.getJSON($SCRIPT_ROOT + '/wiki_api', {keywords: $('input[name="question"]').val()}, function(data){
-			// $('#chat').append(addChatElement('Utilisateur : ', $('input[name="question"]').val()));
 			$('#chat').append(addChatElement('GrandPyBot : ', getRandomSentence() + '"' + data + '"'));
 		});
 	return false;

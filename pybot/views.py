@@ -24,14 +24,14 @@ def index():
 
 @app.route('/wiki_api')
 def wiki_api():
-	keywords = request.args.get('keywords', 'test')
+	keywords = request.args.get('keywords', '')
 	keywords = utils.parser(keywords)
 	result = utils.get_data_from_wiki(keywords)
 	return jsonify(result)
 
 @app.route('/google_api')
 def google_api():
-	keywords = request.args.get('keywords', 'test')
+	keywords = request.args.get('keywords', '')
 	keywords = utils.parser(keywords)
 	print(keywords)
 	try:
