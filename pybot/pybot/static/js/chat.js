@@ -1,5 +1,5 @@
 //List of sentences for the answer of pybot
-var randomSentences = ['Intéressant ! Je suis sûr que tu ne sais même pas que : ', 'Très bon choix ! D\'ailleurs, savais-tu que : ', 'J\'adore cet endroit. Je ne sais pas si tu sais mais : ' ]
+var randomSentences = ['C\'est intéressant ! Je suis sûr que tu ne sais même pas que : ', 'Très bon choix ! D\'ailleurs, savais-tu que : ', 'J\'adore cet endroit. Je ne sais pas si tu sais mais : ' ]
 
 //Get random setence from the list above
 function getRandomSentence(){
@@ -40,30 +40,39 @@ function initMap(lat, long) {
   }
 
 
-//Add asynchronous request to wiki api
+//Add asynchronous request to google api
 $(function(){
 	var submit_form = function(e){
-		$.getJSON($SCRIPT_ROOT + '/wiki_api', {keywords: $('input[name="question"]').val()}, function(data){
+		$.getJSON($SCRIPT_ROOT + '/google_api', {keywords: $('input[name="question"]').val()}, function(data){
 			$('#chat').append(addChatElement('Utilisateur : ', $('input[name="question"]').val()));
-			$('#chat').append(addChatElement('GrandPyBot : ', getRandomSentence() + '"' + data + '"'));
+			if (data === 'NORETURN'){
+				$('#chat').append(addChatElement('GrandPyBot : ', "Je ne comprends pas ce que tu cherches..."))
+			} else{
+			var lat = Number(data[0]);
+			var long = Number(data[1]);
+			var address = data[2];
+			if (address != ''){
+				$('#chat').append(addChatElement('GrandPyBot : ', 'Le lieu que tu cherches se situe : ' + address + '.'))
+			}
+			initMap(lat, long);
+			}
 		});
 	return false;
 	};
 	$('#button').on('click', submit_form);
 });
 
-//Add asynchronous request to google api
-// $(function(){
-// 	var submit_form = function(e){
-// 		$.getJSON($SCRIPT_ROOT + '/google_api', {keywords: $('input[name="question"]').val()}, function(data){
-// 			var lat = Number(data[0]);
-// 			var long = Number(data[1]);
-// 			initMap(lat, long);
-// 		});
-// 	return false;
-// 	};
-// 	$('#button').on('click', submit_form);
-// });
+//Add asynchronous request to wiki api
+$(function(){
+	var submit_form = function(e){
+		$.getJSON($SCRIPT_ROOT + '/wiki_api', {keywords: $('input[name="question"]').val()}, function(data){
+			// $('#chat').append(addChatElement('Utilisateur : ', $('input[name="question"]').val()));
+			$('#chat').append(addChatElement('GrandPyBot : ', getRandomSentence() + '"' + data + '"'));
+		});
+	return false;
+	};
+	$('#button').on('click', submit_form);
+});
 
 
 //Initialize chat with a welcome message

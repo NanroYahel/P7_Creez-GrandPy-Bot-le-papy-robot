@@ -18,7 +18,7 @@ def parser(question):
     with open('pybot/stopwords.json', 'r') as file:
         stopwords = json.load(file)
         for word in list_word:
-            if word in stopwords:
+            if word.lower() in stopwords:
                 list_word.remove(word)
     key_words = " "
     return key_words.join(list_word)
@@ -33,9 +33,16 @@ def get_data_from_google_maps(keywords):
     url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query={}&key={}".format(\
         keywords, conf.GOOGLE_MAPS_KEY)
     data = request_api(url)
-    result_lat = data["results"][0]["geometry"]["location"]["lat"]
-    result_long = data["results"][0]["geometry"]["location"]["lng"]
-    return result_lat, result_long
+    try:
+        result_lat = data["results"][0]["geometry"]["location"]["lat"]
+        result_long = data["results"][0]["geometry"]["location"]["lng"]
+        try:
+            address = data["results"][0]["formatted_address"]
+            return result_lat, result_long, address
+        except KeyError:
+            return result_lat, result_long, ''
+    except IndexError:
+        pass
 
 def get_title_from_wiki(keywords):
     """Request media wiki to get the title of the first article link to the keywords"""

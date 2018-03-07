@@ -19,31 +19,22 @@ def inject_now():
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-	# if request.method == "POST":
-	# 	usr_question = request.form['question']
-	# 	text = utils.make_text(usr_question)
-	# 	return render_template('test.html', question=text)
-
-	#Use an synchronous request to wiki and google api for test
-	# if request.method == "POST":
-	# 	usr_question = request.form['question']
-	# 	keywords = utils.parser(usr_question)
-	# 	result_lat, result_long = utils.get_data_from_google_maps(keywords)
-	# 	wiki_result = utils.get_data_from_wiki(keywords)
-	# 	return render_template('test.html', result_lat=result_lat, result_long=result_long, \
-	# 		google_key=conf.GOOGLE_MAPS_KEY, wiki_result=wiki_result)
-
 	return render_template('index.html', google_key=conf.GOOGLE_MAPS_KEY)
 
 
 @app.route('/wiki_api')
 def wiki_api():
 	keywords = request.args.get('keywords', 'test')
+	keywords = utils.parser(keywords)
 	result = utils.get_data_from_wiki(keywords)
 	return jsonify(result)
 
 @app.route('/google_api')
 def google_api():
 	keywords = request.args.get('keywords', 'test')
-	result_lat, result_long = utils.get_data_from_google_maps(keywords)
-	return jsonify(result_lat, result_long)
+	keywords = utils.parser(keywords)
+	try:
+		result_lat, result_long, address = utils.get_data_from_google_maps(keywords)
+		return jsonify(result_lat, result_long, address)
+	except TypeError:
+		return jsonify('NORETURN')
