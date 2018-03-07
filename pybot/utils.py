@@ -14,6 +14,11 @@ def parser(question):
     """Function used to parse the question of the user
     Remove the word containing in the stopword base to keep
     only key words"""
+    #Variable use to remove all punctuation symbols
+    punctuation = ['.',',','!',':','\'',':','&',';','-','?']
+    for char in question:
+        if char in punctuation:
+            question = question.replace(char,' ')
     list_word = question.split()
     with open('pybot/stopwords.json', 'r') as file:
         stopwords = json.load(file)

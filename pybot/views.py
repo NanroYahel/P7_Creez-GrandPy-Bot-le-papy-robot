@@ -33,6 +33,7 @@ def wiki_api():
 def google_api():
 	keywords = request.args.get('keywords', 'test')
 	keywords = utils.parser(keywords)
+	print(keywords)
 	try:
 		result_lat, result_long, address = utils.get_data_from_google_maps(keywords)
 		return jsonify(result_lat, result_long, address)
