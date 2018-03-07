@@ -3,7 +3,7 @@ import json
 
 import requests as req
 
-import config as conf
+import pybot.config as conf
 
 #Fonction de test à supprimer
 def make_text(question):

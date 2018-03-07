@@ -2,14 +2,14 @@ from flask import Flask, render_template, request, jsonify
 
 from datetime import datetime
 
-import utils
+import pybot.utils as utils
 
-import config as conf
+import pybot.config as conf
 
 app = Flask(__name__)
 
-#Config option
-app.config.from_object('config')
+# #Config option
+# app.config.from_object('config')
 
 #Use for display the correct year for the copyright in the footer
 @app.context_processor
