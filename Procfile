@@ -1,1 +1,1 @@
-web: gunicorn pybot.views
+web: gunicorn pybot.app

@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 
 from datetime import datetime
 
-import utils as utils
+import utils
 
 import config as conf
 
@@ -39,5 +39,3 @@ def google_api():
 	except TypeError:
 		return jsonify('NORETURN')
 
-if __name__ == "__main__":
-	app.run()

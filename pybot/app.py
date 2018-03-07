@@ -1,6 +1,6 @@
-# #! usr/bin/env python
-# from views import app
+#! usr/bin/env python
+from views import app
 
-# if __name__ == "__main__":
-# 	app.run()
+if __name__ == "__main__":
+	app.run()
 
