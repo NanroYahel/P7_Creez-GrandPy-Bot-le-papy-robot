@@ -1,1 +1,1 @@
-web: gunicorn pybot.run
+web: gunicorn app:run
