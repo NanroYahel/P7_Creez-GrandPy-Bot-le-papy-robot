@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 
 from datetime import datetime
 
-import pybot.utils as utils
+import utils as utils
 
 import config as conf
 
