@@ -38,3 +38,6 @@ def google_api():
 		return jsonify(result_lat, result_long, address)
 	except TypeError:
 		return jsonify('NORETURN')
+
+if __name__ == "__main__":
+	app.run()
