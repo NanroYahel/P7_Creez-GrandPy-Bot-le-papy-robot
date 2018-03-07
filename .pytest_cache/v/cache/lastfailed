@@ -1,0 +1,5 @@
+{
+  "pybotapp/test/test_pybot_app.py::test_hello": true,
+  "test/test_pybot_app.py": true,
+  "test/test_pybot_app.py::test_hello": true
+}
