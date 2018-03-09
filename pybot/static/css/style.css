@@ -14,11 +14,17 @@ footer{
 	text-align: center;
 }
 
+#container{
+	margin-left: 20px;
+	margin-right: 20px; 
+}
+
 #chat{
 	border: 2px solid black;
 	height: 100%;
 	min-height: 500px;
-	margin-bottom: 40px;	
+	margin-bottom: 40px;
+	margin-right: 10px;	
 	max-height: 500px;
 	word-wrap: break-word;
 	overflow: auto;
@@ -30,7 +36,34 @@ footer{
 }
 
 #map{
-	margin-left: 20px; 
+	margin-left: 10px;
 	min-height: 500px;
 }
 
+@media all and (max-width: 1024px)
+{
+	#chat{
+	min-height: 300px;	
+	max-height: 300px;
+	margin-left: 20px;
+	margin-right: 20px; 
+	}
+
+	#map{
+	min-height: 300px;
+	margin-right: 20px;
+	margin-left: 20px;
+	}
+}
+
+@media all and (max-width: 480px)
+{
+	#chat{
+	min-height: 200px;	
+	max-height: 200px; 
+	}
+
+	#map{
+	min-height: 200px;
+	}
+}
