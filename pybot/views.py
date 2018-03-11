@@ -26,14 +26,37 @@ def index():
 def wiki_api():
 	keywords = request.args.get('keywords', '')
 	keywords = utils.parser(keywords)
-	result = utils.get_data_from_wiki(keywords)
-	return jsonify(result)
+	address = request.args.get('address','')
+	address = utils.parser_for_wiki(address)
+	# Try the address as keywords in first place
+	try:
+		result = utils.get_data_from_wiki(address)
+		return jsonify(result)
+	# If there is no return, try only the name of the road
+	except KeyError:
+		try:
+			address = utils.parser_for_name_of_road(address)
+			result = utils.get_data_from_wiki(address)
+			return jsonify(result)
+		#If there is still no result try the same keywords that in the google api
+		except KeyError: 
+			try:
+				result = utils.get_data_from_wiki(keywords)
+				return jsonify(result)
+			except KeyError:
+				return jsonify("Euh... Non là je n'ai rien d'intéressant à ce sujet ! ")
+		except ValueError: #Include json.decoder.JSONDecodeError
+			try:
+				result = utils.get_data_from_wiki(keywords)
+				return jsonify(result)
+			except KeyError:
+				return jsonify("Euh... Non là je n'ai rien d'intéressant à ce sujet ! ")
+
 
 @app.route('/google_api')
 def google_api():
 	keywords = request.args.get('keywords', '')
 	keywords = utils.parser(keywords)
-	print(keywords)
 	try:
 		result_lat, result_long, address = utils.get_data_from_google_maps(keywords)
 		return jsonify(result_lat, result_long, address)

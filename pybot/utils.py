@@ -5,6 +5,8 @@ import requests as req
 
 import pybot.config as conf
 
+import re
+
 #Fonction de test à supprimer
 def make_text(question):
     """Fonction pour test"""
@@ -29,6 +31,29 @@ def parser(question):
                 list_keywords.append(word)
     key_words = " "
     return key_words.join(list_keywords)
+
+
+def parser_for_wiki(address):
+    """Function use to parse the address recieve from google to try a request on the road name"""
+    regex = '[0-9]+'
+    result = ' '
+    address_without_number = re.split(regex, address)
+    address_without_number = result.join(address_without_number).split(', ')
+    return result.join(address_without_number)
+
+def parser_for_name_of_road(address):
+    """Function to get only the name of the road in an address"""
+    list_keywords = []
+    list_word = address.split()
+    with open('pybot/stopwords_address.json', 'r') as file:
+        stopwords = json.load(file)
+        for word in list_word:
+            if word.lower() not in stopwords:
+                list_keywords.append(word)
+    key_words = " "
+    result =  key_words.join(list_keywords)
+    result = parser(result)
+    return result
 
 def request_api(url):
     """Request the selected url and return data from the api as json"""
@@ -61,7 +86,7 @@ def get_title_from_wiki(keywords):
         article_title = data[1][0]
     #Return an error message if there is no result
     except IndexError:
-        msg_error = "Je suis désolé, je ne connais rien à ce sujet..."
+        msg_error = "Euh... Non en fait je ne connais rien d'intéressant à ce sujet."
         return msg_error
     return article_title
 
@@ -74,10 +99,6 @@ def get_data_from_wiki(keywords):
         &format=json&explaintext'.format(article_title)
     data = request_api(url)
     #Loop on only one element (page_id), but usefull because we don't know the id of the page
-    try:
-        for page_id in data['query']['pages']:
-            result = data['query']['pages'][page_id]['extract']
-    except KeyError:
-        msg_error = "Je suis désolé, je ne connais rien à ce sujet..."
-        return msg_error
+    for page_id in data['query']['pages']:
+        result = data['query']['pages'][page_id]['extract']
     return result

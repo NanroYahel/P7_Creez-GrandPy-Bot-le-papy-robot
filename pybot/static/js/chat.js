@@ -39,14 +39,11 @@ function initMap(lat, long) {
     });
   }
 
-//Display the question of the user
-$('#button').on('click', function(){
-	$('#chat').append(addChatElement('Utilisateur : ', $('input[name="question"]').val()));
-});
+//New var used for the first wiki request
+var addressReturnFromGoogle = ""
 
-//Add asynchronous request to google api
-$(function(){
-	var submit_form = function(e){
+//Function that call the google api request function
+var submit_google_then_wiki = function(e){
 		$.getJSON($SCRIPT_ROOT + '/google_api', {keywords: $('input[name="question"]').val()}, function(data){
 			if (data === 'NORETURN'){
 				$('#chat').append(addChatElement('GrandPyBot : ', "Je ne comprends pas ce que tu cherches..."))
@@ -56,29 +53,36 @@ $(function(){
 			var address = data[2];
 			if (address != ''){
 				$('#chat').append(addChatElement('GrandPyBot : ', 'Le lieu que tu cherches se situe : ' + address + '.'))
+				addressReturnFromGoogle = address;
 			}
 			initMap(lat, long);
+			submit_wiki();
 			}
 		});
 	return false;
 	};
-	$('#button').on('click', submit_form);
-});
 
-//Add asynchronous request to wiki api
-$(function(){
-	var submit_form = function(e){
-		$.getJSON($SCRIPT_ROOT + '/wiki_api', {keywords: $('input[name="question"]').val()}, function(data){
+//Function that call the wiki api request function
+var submit_wiki = function(e){
+		$.getJSON($SCRIPT_ROOT + '/wiki_api', {keywords: $('input[name="question"]').val(), address: addressReturnFromGoogle}, function(data){
 			$('#chat').append(addChatElement('GrandPyBot : ', getRandomSentence() + '"' + data + '"'));
 		});
 	return false;
 	};
-	$('#button').on('click', submit_form);
+
+//Add asynchronous request to APIs
+$(function(){
+	$('#button').on('click', submit_google_then_wiki);
+});
+
+
+
+//Display the question of the user
+$('#button').on('click', function(){
+	$('#chat').append(addChatElement('Utilisateur : ', $('input[name="question"]').val()));
 });
 
 
 //Initialize chat with a welcome message
 var welcomeMessage = "Bonjour jeune curieux ! Où souhaites-tu te rendre ? ";
 $('#chat').append(addChatElement('GrandPyBot : ', welcomeMessage));
-
-
