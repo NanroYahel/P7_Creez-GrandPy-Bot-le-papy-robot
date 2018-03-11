@@ -81,5 +81,4 @@ $(function(){
 var welcomeMessage = "Bonjour jeune curieux ! Où souhaites-tu te rendre ? ";
 $('#chat').append(addChatElement('GrandPyBot : ', welcomeMessage));
 
-//Initialize map zone with a picture
-$('#map').css('background-image', 'url(static/img/robot.png)')
+

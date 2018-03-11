@@ -11,7 +11,17 @@ header p{
 }
 
 footer{
+	margin-top: 150px;
 	text-align: center;
+}
+
+input{
+	width: 100%;
+}
+
+
+#button{
+	min-width: 90px;
 }
 
 #container{
@@ -38,6 +48,7 @@ footer{
 #map{
 	margin-left: 10px;
 	min-height: 500px;
+	background: url("../img/robot_500.png") no-repeat center;
 }
 
 @media all and (max-width: 1024px)
@@ -53,8 +64,20 @@ footer{
 	min-height: 300px;
 	margin-right: 20px;
 	margin-left: 20px;
+	margin-bottom: 20px;
+	background: url("../img/robot_300.png") no-repeat center;
+	}
+
+	footer{
+	margin-top: 20px;
+	}
+
+	form{
+	margin-left: 10px;
+	margin-right: 10px;
 	}
 }
+
 
 @media all and (max-width: 480px)
 {
@@ -65,5 +88,7 @@ footer{
 
 	#map{
 	min-height: 200px;
+	background: url("../img/robot_200.png") no-repeat center;
 	}
+
 }
