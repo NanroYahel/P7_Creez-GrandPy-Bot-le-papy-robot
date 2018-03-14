@@ -35,35 +35,25 @@ def wiki_api():
 	keywords_try_2 = utils.parser_for_name_of_road(keywords_try_1) # Only the name of the road
 	keywords_try_3 = utils.parser(keywords) #Same keywords that in the google search
 	keywords_try_4 = utils.parser_for_name_of_road(keywords_try_3) #If there is a city name in the question, remove it
-	print(keywords_try_1)
-	print(keywords_try_2)
-	print(keywords_try_3)
-	print(keywords_try_4)
 
 	try:
 		result = utils.get_data_from_wiki(keywords_try_1)
-		print('1')
 	except KeyError:
 		try:
-			print('2')
 			result = utils.get_data_from_wiki(keywords_try_2)
 		except KeyError:
 			try:
-				print('3')
 				result = utils.get_data_from_wiki(keywords_try_3)
 			except KeyError:
 				try:
-					print('4')
 					result = utils.get_data_from_wiki(keywords_try_4)
 				except KeyError:
 					result = NO_RESULT_SENTENCE
 	except ValueError:
 		try:
-			print('5')
 			result = utils.get_data_from_wiki(keywords_try_3)
 		except KeyError:
 			try:
-				print('6')
 				result = utils.get_data_from_wiki(keywords_try_4)
 			except KeyError:
 				result = NO_RESULT_SENTENCE
