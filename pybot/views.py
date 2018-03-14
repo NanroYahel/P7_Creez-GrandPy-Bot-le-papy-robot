@@ -24,7 +24,6 @@ def index():
 	return render_template('index.html', google_key=conf.GOOGLE_MAPS_KEY)
 
 
-
 @app.route('/wiki_api')
 def wiki_api():
 	keywords = request.args.get('keywords', '')
@@ -60,7 +59,6 @@ def wiki_api():
 	if result == '': #Case of wikipedia got an empty page
 		result = NO_RESULT_SENTENCE			
 	return jsonify(result)
-
 
 
 @app.route('/google_api')
