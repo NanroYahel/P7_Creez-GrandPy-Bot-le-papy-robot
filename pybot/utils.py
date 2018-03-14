@@ -36,10 +36,15 @@ def parser(question):
 def parser_for_wiki(address):
     """Function use to parse the address recieve from google to try a request on the road name"""
     regex = '[0-9]+'
-    result = ' '
+    result = ''
     address_without_number = re.split(regex, address)
     address_without_number = result.join(address_without_number).split(', ')
-    return result.join(address_without_number)
+    address_without_number = address_without_number
+    if 'France' in address_without_number:
+        result = result.join(address_without_number).split("France")[0]
+    else:
+        result = result.join(address_without_number)
+    return result
 
 def parser_for_name_of_road(address):
     """Function to get only the name of the road in an address"""

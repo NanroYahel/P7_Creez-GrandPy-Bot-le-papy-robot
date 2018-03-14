@@ -1,5 +1,5 @@
 //List of sentences for the answer of pybot
-var randomSentences = ['C\'est intéressant ! Je suis sûr que tu ne sais même pas que : ', 'Très bon choix ! D\'ailleurs, savais-tu que : ', 'J\'adore cet endroit. Je ne sais pas si tu sais mais : ' ]
+var randomSentences = ['C\'est intéressant ! Sais-tu que : ', 'Très bon choix ! D\'ailleurs, savais-tu que : ', 'J\'adore cet endroit. Je ne sais pas si tu sais mais : ' ]
 
 //Get random setence from the list above
 function getRandomSentence(){
@@ -84,5 +84,5 @@ $('#button').on('click', function(){
 
 
 //Initialize chat with a welcome message
-var welcomeMessage = "Bonjour jeune curieux ! Où souhaites-tu te rendre ? ";
+var welcomeMessage = "Bonjour jeune ami ! Dis moi où tu souhaites te rendre je suis sûr que je connais bien plus que l'adresse !  ";
 $('#chat').append(addChatElement('GrandPyBot : ', welcomeMessage));

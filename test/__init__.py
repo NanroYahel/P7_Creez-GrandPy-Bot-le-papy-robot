@@ -1,1 +1,0 @@
-from pybot.views import app

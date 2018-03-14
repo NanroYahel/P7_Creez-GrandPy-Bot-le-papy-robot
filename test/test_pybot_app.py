@@ -1,11 +1,12 @@
 """File containing all the unit tests for the application"""
 
 import unittest
-from pybot import utils
 from unittest.mock import patch
-
-from io import BytesIO
 import json
+
+from pybot import utils
+from pybot.views import app as app
+
 
 class TestFlaskApp(unittest.TestCase):
     """Unit test class for """
@@ -30,17 +31,30 @@ class TestUtils(unittest.TestCase):
     def test_parser(self):
         """Test the parser function"""
         test_result = utils.parser("Je suis allé au marché")
-        self.assertEqual(test_result,"Je allé marché")
+        self.assertEqual(test_result,"allé marché")
+
+    def test_parser_for_wiki(self):
+        """Test the parser for the wiki request"""
+        test_result = utils.parser_for_wiki("9, rue Albert Einstien, 75000 Paris")
+        self.assertEqual(test_result, "rue Albert Einstien Paris")
+
+    def test_parser_for_name_road(self):
+        """Test the parser to get only the name of a road in an address"""
+        test_result = utils.parser_for_name_of_road("rue Albert Einstien")
+        self.assertEqual(test_result, "Albert Einstien")
+
 
     @patch('pybot.utils.request_api')
     def test_get_data_from_google_maps(self, mock_request_api):
         """Test the Google map api request function"""
         mock_result = {"results": [{"geometry": {"location": \
-            {"lat": 47.231849, "lng": -1.5584598}}}]}
+            {"lat": 47.231849, "lng": -1.5584598}}, "formatted_address": "France"}]}
         mock_request_api.return_value = mock_result
-        test_lat, test_long = utils.get_data_from_google_maps("test")
+        test_lat, test_long, address = utils.get_data_from_google_maps("test")
         self.assertEqual(test_lat, 47.231849)
         self.assertEqual(test_long, -1.5584598)
+        self.assertEqual(address, "France")
+
 
     @patch('pybot.utils.request_api')
     def test_get_title_from_wiki(self, mock_request_api):
